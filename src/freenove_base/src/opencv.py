@@ -14,7 +14,6 @@ class color_detection:
         self.servo_pub = rospy.Publisher(self.TOPIC["servo_topic"], servo_msg, queue_size=3)
         self.motor_pub = rospy.Publisher(self.TOPIC["motor_topic"], motor_msg, queue_size=3)
 
-        
         # Init camera                 
         self.image_w = 320
         self.image_h = 240

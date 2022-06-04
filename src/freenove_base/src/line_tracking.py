@@ -9,7 +9,10 @@ class Line_Tracking:
         # Subscriber
         self.line_tracking_sub = rospy.Subscriber(line_tracking_topic,line_tracking_msg,
                             self.line_tracking_callback, queue_size=3)
-        
+       
+        #ADDED THIS CHECK VARIABLE TO STOP LINE TRACKING IN CONTROLLER
+        self.check = 1
+
     def line_tracking_callback(self,msg): 
         flag=1
         self.LMR=0x00
@@ -23,15 +26,15 @@ class Line_Tracking:
 
         # Motors' speed and direction judgment
         if self.LMR==2:
-            wheels_pose =[800,800,800,800]
+            wheels_pose =[600,600,600,600]
         elif self.LMR==4:
-            wheels_pose =[-1000,-1000,2000,2000]
+            wheels_pose =[-500,-500,1500,1500]
         elif self.LMR==6:
-            wheels_pose =[-1500,-1500,3500,3500]
+            wheels_pose =[-1000,-1000,3000,3000]
         elif self.LMR==1:
-            wheels_pose =[2000,2000,-1000,-1000]
+            wheels_pose =[1500,1500,-500,-500]
         elif self.LMR==3:
-            wheels_pose =[3500,3500,-1500,-1500]            
+            wheels_pose =[3000,3000,-1000,-1000]            
         elif self.LMR==7: 
             wheels_pose =[0,0,0,0]
         else:
@@ -52,7 +55,7 @@ class Line_Tracking:
         #     wheels_pose =[0,0,0,0]
         
         # Publish only if judgment is changed           
-        if flag:
+        if flag == 1 and self.check == 1:
             self.update(wheels_pose)
         
     def update(self,wheels_pose):
@@ -60,7 +63,7 @@ class Line_Tracking:
         move.left_Upper_Wheel = wheels_pose[0]
         move.left_Lower_Wheel = wheels_pose[1]
         move.right_Upper_Wheel = wheels_pose[2]
-        move.right_Lower_Wheel=wheels_pose[3]
+        move.right_Lower_Wheel = wheels_pose[3]
         self.motor_pub.publish(move)
         
 
@@ -72,4 +75,4 @@ if __name__ == '__main__':
     run_line = Line_Tracking(motor_topic,line_tracking_topic)
     # Keep running node run 
     rospy.spin()
-    print("exit tacking")
+    print("exit tracking")

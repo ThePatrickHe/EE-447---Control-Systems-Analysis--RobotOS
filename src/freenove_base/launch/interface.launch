@@ -9,7 +9,7 @@
     <param name="led_topic" value="/car/hardware/led"/>
   </node>
 
-  <node name="line_tracking" pkg="freenove_base" type="line_tracking.py" launch-prefix="sudo -E PYTHONPATH=$(env PYTHONPATH)">
-  </node>
+  <!-- <node name="controller" pkg="freenove_base" type="controller.py">
+  </node> -->
 
 </launch>

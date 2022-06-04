@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import rospy
 from freenove_base.msg import motor_msg,servo_msg
-
+import time
 import cv2
 import numpy as np
 
@@ -147,7 +147,8 @@ class color_detection:
                 if self.horizontal<151 and self.horizontal>29:
                     self.update_servo(self.horizontal)
                     #move forward
-                    self.update_moto(600,600,600,600)                    
+                    self.update_moto(1000,1000,1000,1000) 
+                    rospy.sleep(0.04)
                 # If target out of range, turn car to keep servo in the range 
                 elif self.horizontal>150:
                     self.left = 800
@@ -163,7 +164,7 @@ class color_detection:
         # Updata image 
         if self.display == 1:
             cv2.imshow('block_detect', img)
-            
+
     def end(self):
         self.update_moto(0,0,0,0)   
 

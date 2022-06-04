@@ -76,7 +76,7 @@ if __name__ == '__main__':
     run_line.check = 1
     while run_line.check == 1:
         distance = message.get_distance()
-        print(distance)
+        # print(distance)
         distance_values.append(distance)
         # time.sleep(.1)
 
@@ -101,18 +101,27 @@ if __name__ == '__main__':
     # Turn around:
 
     run_line.update([-1500,-1500,1500,1500])
-    time.sleep(1.7)
+    time.sleep(1.4)
     run_line.update([0,0,0,0])
 
+    #OpenCV
     display_image = 1
-    run = color_detection(TOPIC,display_image)        
-    while not rospy.is_shutdown(): 
-        run.loop()                    
+    run = color_detection(TOPIC,display_image)
+    while run_line.LMR == 0:
+        run.loop()
         if cv2.waitKey(10) & 0xFF == ord('q'):
             break
     run.cap.release()
     cv2.destroyWindow('block_detect')
 
+    #stop all movement at second line
+    run_line.update([0,0,0,0])
+    #re-enable
+    run_line.check = 1
+    while run_line.LMR != 7:
+        run_line.check = 1
+    run_line.check = 0
+   
     #stop everything
     run_line.update([0,0,0,0])
     print("\nexit interface")

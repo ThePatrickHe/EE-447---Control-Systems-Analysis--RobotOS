@@ -2,6 +2,8 @@
 import rospy
 from freenove_base.msg import motor_msg,line_tracking_msg
 
+LMR = 0x00
+
 class Line_Tracking:
     def __init__(self,motor_topic,line_tracking_topic):
         # Publisher
@@ -28,11 +30,11 @@ class Line_Tracking:
         if self.LMR==2:
             wheels_pose =[600,600,600,600]
         elif self.LMR==4:
-            wheels_pose =[-500,-500,1500,1500]
+            wheels_pose =[-1000,-1000,1500,1500]
         elif self.LMR==6:
             wheels_pose =[-1000,-1000,3000,3000]
         elif self.LMR==1:
-            wheels_pose =[1500,1500,-500,-500]
+            wheels_pose =[1500,1500,-1000,-1000]
         elif self.LMR==3:
             wheels_pose =[3000,3000,-1000,-1000]            
         elif self.LMR==7: 
